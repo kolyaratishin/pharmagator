@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FilterRequest {
 
-	private Long page;
-	private Long per;
+    private Long page;
+    private Long per;
 
 }

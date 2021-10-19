@@ -4,6 +4,7 @@ package com.eleks.academy.pharmagator.controllers;
 import com.eleks.academy.pharmagator.controllers.dto.PriceDto;
 import com.eleks.academy.pharmagator.entities.Price;
 import com.eleks.academy.pharmagator.services.PriceService;
+import com.eleks.academy.pharmagator.services.projection.PriceLight;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +20,13 @@ public class PriceController {
     private final PriceService priceService;
 
     @GetMapping
-    public List<Price> getAll() {
+    public List<PriceLight> getAll() {
 
         return this.priceService.findAll();
     }
 
     @GetMapping("/{pharmacyId}/{medicineId}")
-    public ResponseEntity<Price> getById(
+    public ResponseEntity<PriceLight> getById(
             @PathVariable("pharmacyId") Long pharmacyId,
             @PathVariable("medicineId") Long medicineId) {
 
@@ -35,7 +36,7 @@ public class PriceController {
     }
 
     @PostMapping("/{pharmacyId}/{medicineId}")
-    public ResponseEntity<Price> update(
+    public ResponseEntity<PriceLight> update(
             @Valid @RequestBody PriceDto priceDto,
             @PathVariable("pharmacyId") Long pharmacyId,
             @PathVariable("medicineId") Long medicineId) {
