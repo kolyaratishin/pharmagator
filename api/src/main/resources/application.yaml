@@ -10,7 +10,7 @@ spring:
 
 pharmagator:
   data-providers:
-    apteka-anc:
+    pharmacy-anc:
       url: https://anc.ua/productbrowser/v2/ua
       category-fetch-url: /categories
 

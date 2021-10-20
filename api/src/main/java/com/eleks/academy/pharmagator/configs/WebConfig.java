@@ -16,7 +16,7 @@ public class WebConfig {
         return new ModelMapper();
     }
 
-    @Value("${pharmagator.data-providers.apteka-anc.url}")
+    @Value("${pharmagator.data-providers.pharmacy-anc.url}")
     private String pharmacyANCBaseUrl;
 
     @Bean(name = "pharmacyANCWebClient")
