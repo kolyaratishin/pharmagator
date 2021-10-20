@@ -7,18 +7,17 @@ import com.eleks.academy.pharmagator.dataproviders.dto.anc.ANCCategoryDto;
 import com.eleks.academy.pharmagator.dataproviders.dto.anc.ANCMedicineDto;
 import com.eleks.academy.pharmagator.dataproviders.dto.anc.ANCMedicinesResponse;
 import com.eleks.academy.pharmagator.dataproviders.dto.anc.ANCSubcategoryDto;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Stream;
 
 @Service

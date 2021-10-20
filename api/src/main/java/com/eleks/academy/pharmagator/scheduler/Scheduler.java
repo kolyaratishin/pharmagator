@@ -4,6 +4,7 @@ import com.eleks.academy.pharmagator.dataproviders.DataProvider;
 import com.eleks.academy.pharmagator.dataproviders.dto.MedicineDto;
 import com.eleks.academy.pharmagator.entities.Medicine;
 import com.eleks.academy.pharmagator.entities.Price;
+import com.eleks.academy.pharmagator.repositories.MedicineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -21,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 public class Scheduler {
 
     private final List<DataProvider> dataProviders;
-
+    MedicineRepository medicineRepository;
     private final ModelMapper modelMapper;
 
     @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
@@ -32,5 +33,8 @@ public class Scheduler {
 
     private void storeToDatabase(MedicineDto dto) {
         log.info(dto.getTitle() + " - " + dto.getPrice());
+        log.info(dto.toString());
+    //    medicineRepository.save(modelMapper.map(dto,Medicine.class));
+
     }
 }
