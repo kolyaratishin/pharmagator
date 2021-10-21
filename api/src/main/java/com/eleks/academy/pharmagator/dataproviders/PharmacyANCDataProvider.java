@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Collection;
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -42,22 +40,15 @@ public class PharmacyANCDataProvider implements DataProvider {
     }
 
     private List<ANCSubcategoryDto> fetchCategories() {
+
         return this.ancClient.get().uri(categoriesFetchUrl)
                 .retrieve().bodyToMono(new ParameterizedTypeReference<ANCCategoryDto>() {
                 }).map(ANCCategoryDto::getCategories).block();
-    }
 
-    private Deque<ANCSubcategoryDto> findAllDeepestCategories(ANCSubcategoryDto ancSubcategoryDto) {
-        Deque<ANCSubcategoryDto> allSubcategories = new LinkedList<>();
-
-        for (ANCSubcategoryDto subcategory : ancSubcategoryDto.getSubcategories()) {
-            allSubcategories.addAll(subcategory.getSubcategories());
-        }
-
-        return allSubcategories;
     }
 
     private Stream<MedicineDto> fetchProductsByCategory(String category) {
+
         ANCMedicinesResponse ancMedicinesResponse = this.ancClient.get()
                 .uri(categoriesFetchUrl + "/" + category)
                 .retrieve()
@@ -66,13 +57,16 @@ public class PharmacyANCDataProvider implements DataProvider {
                 .block();
 
         return ancMedicinesResponse.getProducts().stream().map(this::mapToMedicineDto);
+
     }
 
     private MedicineDto mapToMedicineDto(ANCMedicineDto ancMedicineDTO) {
+
         return MedicineDto.builder()
                 .externalId(ancMedicineDTO.getId())
                 .price(ancMedicineDTO.getPrice())
                 .title(ancMedicineDTO.getName())
                 .build();
     }
+
 }

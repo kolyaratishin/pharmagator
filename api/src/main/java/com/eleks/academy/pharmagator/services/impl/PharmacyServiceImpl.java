@@ -51,7 +51,7 @@ public class PharmacyServiceImpl implements PharmacyService {
     }
 
     @Override
-    public Optional<PharmacyLight> update(PharmacyDto pharmacyDto, Long id) {
+    public Optional<PharmacyLight> update(Long id, PharmacyDto pharmacyDto) {
 
         return pharmacyRepository.findById(id)
                 .map(source -> {

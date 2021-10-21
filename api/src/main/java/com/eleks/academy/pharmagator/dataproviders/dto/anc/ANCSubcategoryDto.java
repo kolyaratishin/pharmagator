@@ -13,6 +13,9 @@ import java.util.List;
 public class ANCSubcategoryDto {
 
     private String name;
+
     private String link;
+
     private List<ANCSubcategoryDto> subcategories;
+
 }

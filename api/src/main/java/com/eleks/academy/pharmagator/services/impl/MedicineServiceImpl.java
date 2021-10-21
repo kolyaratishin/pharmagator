@@ -25,12 +25,14 @@ public class MedicineServiceImpl implements MedicineService {
     public List<Medicine> findAll() {
 
         return medicineRepository.findAll();
+
     }
 
     @Override
     public Optional<Medicine> findById(Long id) {
 
         return medicineRepository.findById(id);
+
     }
 
     @Override
@@ -38,23 +40,27 @@ public class MedicineServiceImpl implements MedicineService {
 
         Medicine medicine = modelMapper.map(medicineDto, Medicine.class);
         return medicineRepository.save(medicine);
+
     }
 
     @Override
-    public Optional<Medicine> update(MedicineDto medicineDto, Long id) {
+    public Optional<Medicine> update(Long id,MedicineDto medicineDto) {
 
         return medicineRepository.findById(id)
                 .map(source -> {
-                    source = modelMapper.map(medicineDto, Medicine.class);
-                    source.setId(id);
+                    Medicine target = modelMapper.map(medicineDto, Medicine.class);
+                    target.setId(source.getId());
                     medicineRepository.save(source);
                     return source;
                 });
+
     }
 
     @Override
     public void deleteById(Long id) {
 
         medicineRepository.deleteById(id);
+
     }
+
 }

@@ -24,13 +24,17 @@ public class Scheduler {
     private final List<DataProvider> dataProviderList;
 
     private final List<DataProvider> dataProviders;
-    MedicineRepository medicineRepository;
+
+    private final MedicineRepository medicineRepository;
+
     private final ModelMapper modelMapper;
 
     @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
     public void schedule() {
+
         log.info("Scheduler started at {}", Instant.now());
         dataProviderList.stream().flatMap(DataProvider::loadData).forEach(this::storeToDatabase);
+
     }
 
     private void storeToDatabase(MedicineDto dto) {

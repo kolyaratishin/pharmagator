@@ -8,7 +8,6 @@ import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration

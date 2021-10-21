@@ -43,10 +43,10 @@ public class PharmacyController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PharmacyLight> update(
-            @Valid @RequestBody PharmacyDto pharmacyDto,
-            @PathVariable("id") Long id) {
+            @PathVariable("id") Long id,
+            @Valid @RequestBody PharmacyDto pharmacyDto) {
 
-        return this.pharmacyService.update(pharmacyDto, id)
+        return this.pharmacyService.update(id, pharmacyDto)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
 

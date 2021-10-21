@@ -12,6 +12,7 @@ import java.util.List;
 public class ANCMedicinesResponse {
 
     private Long total;
+
     private List<ANCMedicineDto> products;
 
 }

@@ -15,9 +15,13 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "pharmacies")
 public class Pharmacy {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private String medicineLinkTemplate;
+
 }

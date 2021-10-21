@@ -35,6 +35,7 @@ public class PriceServiceImpl implements PriceService {
         return priceRepository.findAll().stream()
                 .map(entity -> projectionFactory.createProjection(PriceLight.class, entity))
                 .collect(Collectors.toList());
+
     }
 
     @Override
@@ -44,10 +45,11 @@ public class PriceServiceImpl implements PriceService {
 
         return this.priceRepository.findById(priceId)
                 .map(entity -> projectionFactory.createProjection(PriceLight.class, entity));
+
     }
 
     @Override
-    public Optional<PriceLight> update(PriceDto priceDto, Long pharmacyId, Long medicineId) {
+    public Optional<PriceLight> update(Long pharmacyId, Long medicineId, PriceDto priceDto) {
 
         PriceId priceId = new PriceId(pharmacyId, medicineId);
 
@@ -80,7 +82,10 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public void deleteById(Long pharmacyId, Long medicineId) {
+
         PriceId priceId = new PriceId(pharmacyId, medicineId);
         priceRepository.deleteById(priceId);
+
     }
+
 }

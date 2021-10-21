@@ -23,6 +23,7 @@ public class PriceController {
     public List<PriceLight> getAll() {
 
         return this.priceService.findAll();
+
     }
 
     @GetMapping("/{pharmacyId}/{medicineId}")
@@ -33,6 +34,7 @@ public class PriceController {
         return this.priceService.findById(pharmacyId, medicineId)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+
     }
 
     @PostMapping("/{pharmacyId}/{medicineId}")
@@ -41,7 +43,7 @@ public class PriceController {
             @PathVariable("pharmacyId") Long pharmacyId,
             @PathVariable("medicineId") Long medicineId) {
 
-        return this.priceService.update(priceDto, pharmacyId, medicineId)
+        return this.priceService.update(pharmacyId, medicineId, priceDto)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
 
@@ -53,6 +55,9 @@ public class PriceController {
             @PathVariable("medicineId") Long medicineId) {
 
         this.priceService.deleteById(pharmacyId, medicineId);
+
         return ResponseEntity.noContent().build();
+
     }
+
 }

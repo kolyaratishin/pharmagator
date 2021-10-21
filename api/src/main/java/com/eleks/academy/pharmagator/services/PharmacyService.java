@@ -15,7 +15,8 @@ public interface PharmacyService {
 
     PharmacyLight save(PharmacyDto pharmacyDto);
 
-    Optional<PharmacyLight> update(PharmacyDto pharmacyDto, Long id);
+    Optional<PharmacyLight> update(Long id, PharmacyDto pharmacyDto);
 
     void deleteById(Long id);
+
 }

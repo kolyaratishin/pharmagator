@@ -13,7 +13,8 @@ public interface PriceService {
 
     Optional<PriceLight> findById(Long pharmacyId, Long medicineId);
 
-    Optional<PriceLight> update(PriceDto priceDto, Long pharmacyId, Long medicineId);
+    Optional<PriceLight> update(Long pharmacyId, Long medicineId, PriceDto priceDto);
 
     void deleteById(Long pharmacyId, Long medicineId);
+
 }
