@@ -1,12 +1,13 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/pharmagator
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://localhost:5433/pharmagator
+    username: root
+    password: 123
   jpa:
     hibernate:
       ddl-auto: validate
-
+  codec:
+    max-in-memory-size: 100MB
 
 pharmagator:
   data-providers:
@@ -17,4 +18,3 @@ pharmagator:
     pharmacy-anc:
       url: https://anc.ua/productbrowser/v2/ua
       category-fetch-url: /categories
-

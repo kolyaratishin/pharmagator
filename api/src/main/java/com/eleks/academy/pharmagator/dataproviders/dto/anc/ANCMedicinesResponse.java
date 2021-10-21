@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ANCMedicinesResponse {
 
-	private Long total;
-	private List<ANCMedicineDto> products;
+    private Long total;
+    private List<ANCMedicineDto> products;
 
 }

@@ -7,12 +7,16 @@ import com.eleks.academy.pharmagator.repositories.MedicineRepository;
 import com.eleks.academy.pharmagator.repositories.PharmacyRepository;
 import com.eleks.academy.pharmagator.repositories.PriceRepository;
 import com.eleks.academy.pharmagator.services.PriceService;
+import com.eleks.academy.pharmagator.services.projection.PharmacyLight;
+import com.eleks.academy.pharmagator.services.projection.PriceLight;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,21 +28,26 @@ public class PriceServiceImpl implements PriceService {
 
     private final PharmacyRepository pharmacyRepository;
 
+    private final ProjectionFactory projectionFactory;
+
     @Override
-    public List<Price> findAll() {
-        return priceRepository.findAll();
+    public List<PriceLight> findAll() {
+        return priceRepository.findAll().stream()
+                .map(entity -> projectionFactory.createProjection(PriceLight.class, entity))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Price> findById(Long pharmacyId, Long medicineId) {
+    public Optional<PriceLight> findById(Long pharmacyId, Long medicineId) {
 
         PriceId priceId = new PriceId(pharmacyId, medicineId);
 
-        return this.priceRepository.findById(priceId);
+        return this.priceRepository.findById(priceId)
+                .map(entity -> projectionFactory.createProjection(PriceLight.class, entity));
     }
 
     @Override
-    public Optional<Price> update(PriceDto priceDto, Long pharmacyId, Long medicineId) {
+    public Optional<PriceLight> update(PriceDto priceDto, Long pharmacyId, Long medicineId) {
 
         PriceId priceId = new PriceId(pharmacyId, medicineId);
 
@@ -64,7 +73,8 @@ public class PriceServiceImpl implements PriceService {
                     source.setExternalId(priceDto.getExternalId());
                     return source;
                 }).or(() -> create.apply(priceId))
-                .map(this.priceRepository::save);
+                .map(source -> projectionFactory
+                        .createProjection(PriceLight.class, priceRepository.save(source)));
 
     }
 
