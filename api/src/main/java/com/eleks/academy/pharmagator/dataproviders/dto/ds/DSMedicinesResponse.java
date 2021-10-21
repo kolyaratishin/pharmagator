@@ -1,4 +1,4 @@
-package com.eleks.academy.pharmagator.dataproviders.dto.anc;
+package com.eleks.academy.pharmagator.dataproviders.dto.ds;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,10 +9,10 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ANCMedicinesResponse {
+public class DSMedicinesResponse {
 
     private Long total;
 
-    private List<ANCMedicineDto> products;
+    private List<DSMedicineDto> products;
 
 }

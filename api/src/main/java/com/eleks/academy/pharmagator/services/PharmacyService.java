@@ -2,19 +2,21 @@ package com.eleks.academy.pharmagator.services;
 
 import com.eleks.academy.pharmagator.controllers.dto.PharmacyDto;
 import com.eleks.academy.pharmagator.entities.Pharmacy;
+import com.eleks.academy.pharmagator.services.projection.PharmacyLight;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface PharmacyService {
 
-    List<Pharmacy> findAll();
+    List<PharmacyLight> findAll();
 
-    Optional<Pharmacy> findById(Long id);
+    Optional<PharmacyLight> findById(Long id);
 
-    Pharmacy save(PharmacyDto pharmacyDto);
+    PharmacyLight save(PharmacyDto pharmacyDto);
 
-    Optional<Pharmacy> update(PharmacyDto pharmacyDto, Long id);
+    Optional<PharmacyLight> update(Long id, PharmacyDto pharmacyDto);
 
     void deleteById(Long id);
+
 }

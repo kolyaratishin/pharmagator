@@ -13,28 +13,39 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.random.RandomGenerator;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Slf4j
-@RequiredArgsConstructor
 @Component
+@RequiredArgsConstructor
 public class Scheduler {
 
-    private final List<DataProvider> dataProviders;
-    MedicineRepository medicineRepository;
+    private final List<DataProvider> dataProviderList;
+
+    private final MedicineRepository medicineRepository;
+
     private final ModelMapper modelMapper;
 
     @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
     public void schedule() {
+
         log.info("Scheduler started at {}", Instant.now());
-        dataProviders.stream().flatMap(DataProvider::loadData).forEach(this::storeToDatabase);
+
+        dataProviderList.stream().flatMap(DataProvider::loadData).forEach(this::storeToDatabase);
+
     }
 
     private void storeToDatabase(MedicineDto dto) {
+
         log.info(dto.getTitle() + " - " + dto.getPrice());
-        log.info(dto.toString());
-    //    medicineRepository.save(modelMapper.map(dto,Medicine.class));
 
     }
+
 }

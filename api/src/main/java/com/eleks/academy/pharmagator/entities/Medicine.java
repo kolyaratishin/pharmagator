@@ -11,8 +11,11 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "medicines")
 public class Medicine {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
+
 }

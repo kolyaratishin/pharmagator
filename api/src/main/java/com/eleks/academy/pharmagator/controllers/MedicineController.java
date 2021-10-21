@@ -28,27 +28,34 @@ public class MedicineController {
         return this.medicineService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+
     }
 
     @PostMapping
-    public ResponseEntity<Medicine> create(@Valid @RequestBody MedicineDto medicineDto) {
+    public Medicine create(@Valid @RequestBody MedicineDto medicineDto) {
 
-        return ResponseEntity.ok(this.medicineService.save(medicineDto));
+        return this.medicineService.save(medicineDto);
+
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Medicine> update(
-            @Valid @RequestBody MedicineDto medicineDto,
-            @PathVariable("id") Long id) {
+            @PathVariable("id") Long id,
+            @Valid @RequestBody MedicineDto medicineDto) {
 
-        return this.medicineService.update(medicineDto, id)
+        return this.medicineService.update(id,medicineDto)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+
         this.medicineService.deleteById(id);
+
         return ResponseEntity.noContent().build();
+
     }
+
 }
