@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.stream.Stream;
 @Qualifier("pharmacyDSDataProvider")
 public class PharmacyDSDataProvider implements DataProvider {
 
+    @Qualifier("pharmacyDSWebClient")
     private final WebClient dsClient;
 
     @Value("${pharmagator.data-providers.apteka-ds.category-fetch-url}")
