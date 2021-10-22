@@ -2,9 +2,8 @@ package com.eleks.academy.pharmagator.controllers;
 
 
 import com.eleks.academy.pharmagator.controllers.dto.PriceDto;
-import com.eleks.academy.pharmagator.entities.Price;
+import com.eleks.academy.pharmagator.projections.PriceLight;
 import com.eleks.academy.pharmagator.services.PriceService;
-import com.eleks.academy.pharmagator.services.projection.PriceLight;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

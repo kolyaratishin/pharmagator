@@ -1,8 +1,7 @@
 package com.eleks.academy.pharmagator.services;
 
 import com.eleks.academy.pharmagator.controllers.dto.PharmacyDto;
-import com.eleks.academy.pharmagator.entities.Pharmacy;
-import com.eleks.academy.pharmagator.services.projection.PharmacyLight;
+import com.eleks.academy.pharmagator.projections.PharmacyLight;
 
 import java.util.List;
 import java.util.Optional;

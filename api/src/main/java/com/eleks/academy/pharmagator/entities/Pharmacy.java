@@ -1,16 +1,13 @@
 package com.eleks.academy.pharmagator.entities;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
 
+@Data
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "pharmacies")
@@ -20,6 +17,7 @@ public class Pharmacy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     private String medicineLinkTemplate;

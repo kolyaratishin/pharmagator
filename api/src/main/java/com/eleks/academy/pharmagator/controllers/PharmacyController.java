@@ -1,9 +1,8 @@
 package com.eleks.academy.pharmagator.controllers;
 
 import com.eleks.academy.pharmagator.controllers.dto.PharmacyDto;
-import com.eleks.academy.pharmagator.entities.Pharmacy;
+import com.eleks.academy.pharmagator.projections.PharmacyLight;
 import com.eleks.academy.pharmagator.services.PharmacyService;
-import com.eleks.academy.pharmagator.services.projection.PharmacyLight;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

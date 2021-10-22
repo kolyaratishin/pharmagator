@@ -1,8 +1,7 @@
 package com.eleks.academy.pharmagator.services;
 
 import com.eleks.academy.pharmagator.controllers.dto.PriceDto;
-import com.eleks.academy.pharmagator.entities.Price;
-import com.eleks.academy.pharmagator.services.projection.PriceLight;
+import com.eleks.academy.pharmagator.projections.PriceLight;
 
 import java.util.List;
 import java.util.Optional;

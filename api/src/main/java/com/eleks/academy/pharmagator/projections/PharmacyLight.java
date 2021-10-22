@@ -1,4 +1,4 @@
-package com.eleks.academy.pharmagator.services.projection;
+package com.eleks.academy.pharmagator.projections;
 
 public interface PharmacyLight {
 

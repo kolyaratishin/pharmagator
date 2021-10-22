@@ -2,8 +2,8 @@ package com.eleks.academy.pharmagator.controllers;
 
 import com.eleks.academy.pharmagator.controllers.dto.PriceDto;
 import com.eleks.academy.pharmagator.entities.Price;
+import com.eleks.academy.pharmagator.projections.PriceLight;
 import com.eleks.academy.pharmagator.services.PriceService;
-import com.eleks.academy.pharmagator.services.projection.PriceLight;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
