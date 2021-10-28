@@ -12,6 +12,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,23 +64,20 @@ public class PharmacyANCDataProvider implements DataProvider {
                 .bodyToMono(ANCMedicinesResponse.class)
                 .block();
 
-        List<ANCMedicinesResponse> responseList =
-                LongStream.range(1,firstANCMedicinesResponse.getTotal()/pageSize)
+        return LongStream.range(1, firstANCMedicinesResponse.getTotal() / pageSize)
                 .mapToObj(page ->
                         this.ancClient.get()
                                 .uri(builder -> builder
-                                .path(categoriesFetchUrl + "/" + category)
-                                .queryParam("p", page)
-                                .queryParam("s", pageSize)
-                                 .build())
+                                        .path(categoriesFetchUrl + "/" + category)
+                                        .queryParam("p", page)
+                                        .queryParam("s", pageSize)
+                                        .build())
                                 .retrieve()
                                 .bodyToMono(ANCMedicinesResponse.class)
                                 .block()
-                ).collect(Collectors.toList());
-
-        responseList.add(firstANCMedicinesResponse);
-
-        return responseList.stream()
+                )
+                .collect(Collectors.toCollection(() -> Arrays.asList(firstANCMedicinesResponse)))
+                .stream()
                 .map(ANCMedicinesResponse::getProducts)
                 .flatMap(Collection::stream)
                 .map(this::mapToMedicineDto);

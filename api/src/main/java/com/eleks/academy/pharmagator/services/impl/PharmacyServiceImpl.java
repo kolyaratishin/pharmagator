@@ -2,9 +2,9 @@ package com.eleks.academy.pharmagator.services.impl;
 
 import com.eleks.academy.pharmagator.controllers.dto.PharmacyDto;
 import com.eleks.academy.pharmagator.entities.Pharmacy;
+import com.eleks.academy.pharmagator.projections.PharmacyLight;
 import com.eleks.academy.pharmagator.repositories.PharmacyRepository;
 import com.eleks.academy.pharmagator.services.PharmacyService;
-import com.eleks.academy.pharmagator.projections.PharmacyLight;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.projection.ProjectionFactory;

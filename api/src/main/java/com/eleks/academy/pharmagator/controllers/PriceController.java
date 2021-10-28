@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class PriceController {
 
     @GetMapping
     public List<PriceLight> getAll() {
-
+        Arrays.asList(1);
         return this.priceService.findAll();
 
     }
