@@ -1,8 +1,19 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/pharmagator
-    username: root
-    password: 123
+    url: jdbc:postgresql://localhost:5432/pharmagator
+    username: postgres
+    password: postgres
   jpa:
     hibernate:
       ddl-auto: validate
+
+pharmagator:
+  data-providers:
+    apteka-ds:
+      url: https://api-int.apteka-ds.com.ua/api/v1
+      category-fetch-url: /category-menu
+      category-path: /cat-prods-by-page
+    pharmacy-anc:
+      url: https://anc.ua/productbrowser/v2/ua
+      category-fetch-url: /categories
+      pageSize: 400
