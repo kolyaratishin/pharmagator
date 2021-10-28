@@ -17,8 +17,6 @@ public class PharmacyController {
 
     private final PharmacyService pharmacyService;
 
-    private final ModelMapper modelMapper;
-
     @GetMapping
     public List<PharmacyLight> getAll() {
 
