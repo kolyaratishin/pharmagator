@@ -7,10 +7,13 @@ spring:
     hibernate:
       ddl-auto: validate
 
-
 pharmagator:
   data-providers:
     apteka-ds:
       url: https://api-int.apteka-ds.com.ua/api/v1
       category-fetch-url: /category-menu
       category-path: /cat-prods-by-page
+    pharmacy-anc:
+      url: https://anc.ua/productbrowser/v2/ua
+      category-fetch-url: /categories
+      pageSize: 400

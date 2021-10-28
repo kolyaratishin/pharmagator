@@ -23,6 +23,7 @@ import java.util.stream.Stream;
 @Qualifier("pharmacyDSDataProvider")
 public class PharmacyDSDataProvider implements DataProvider {
 
+    @Qualifier("pharmacyDSWebClient")
     private final WebClient dsClient;
 
     @Value("${pharmagator.data-providers.apteka-ds.category-fetch-url}")
@@ -33,18 +34,22 @@ public class PharmacyDSDataProvider implements DataProvider {
 
     @Override
     public Stream<MedicineDto> loadData() {
+
         return this.fetchCategories().stream()
                 .filter(categoryDto -> categoryDto.getName().equals("Медикаменти"))
                 .map(CategoryDto::getChildren)
                 .flatMap(Collection::stream)
                 .map(CategoryDto::getSlug)
                 .flatMap(this::fetchMedicinesByCategory);
+
     }
 
     private List<CategoryDto> fetchCategories() {
+
         return this.dsClient.get().uri(categoriesFetchUrl)
                 .retrieve().bodyToMono(new ParameterizedTypeReference<List<CategoryDto>>() {
                 }).block();
+
     }
 
     private Stream<MedicineDto> fetchMedicinesByCategory(String category) {
@@ -64,13 +69,19 @@ public class PharmacyDSDataProvider implements DataProvider {
                 .block();
 
         Long total;
+
         if (dsMedicinesResponse != null) {
+
             total = dsMedicinesResponse.getTotal();
+
             long pageCount = total / pageSize;
 
             List<DSMedicinesResponse> responseList = new ArrayList<>();
+
             long page = 1L;
+
             while (page <= pageCount) {
+
                 DSMedicinesResponse medicinesResponse = this.dsClient.post()
                         .uri(categoryPath + "/" + category)
                         .body(Mono.just(FilterRequest.builder()
@@ -82,22 +93,27 @@ public class PharmacyDSDataProvider implements DataProvider {
                         .block();
                 responseList.add(medicinesResponse);
                 page++;
+
             }
+
             return responseList.stream().map(DSMedicinesResponse::getProducts)
                     .flatMap(Collection::stream)
                     .map(this::mapToMedicineDto);
-        }
-        return Stream.of();
 
+        }
+
+        return Stream.of();
 
     }
 
     private MedicineDto mapToMedicineDto(DSMedicineDto dsMedicineDto) {
+
         return MedicineDto.builder()
                 .externalId(dsMedicineDto.getId())
                 .price(dsMedicineDto.getPrice())
                 .title(dsMedicineDto.getName())
                 .build();
+
     }
 
 }

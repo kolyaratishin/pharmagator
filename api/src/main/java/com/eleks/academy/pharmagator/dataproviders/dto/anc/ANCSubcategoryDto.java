@@ -1,4 +1,5 @@
-package com.eleks.academy.pharmagator.dataproviders.dto.ds;
+package com.eleks.academy.pharmagator.dataproviders.dto.anc;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,12 +10,12 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDto {
+public class ANCSubcategoryDto {
 
     private String name;
 
-    private String slug;
+    private String link;
 
-    private List<CategoryDto> children;
+    private List<ANCSubcategoryDto> subcategories;
 
 }
