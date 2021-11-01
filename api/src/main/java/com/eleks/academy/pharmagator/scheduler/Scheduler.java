@@ -26,7 +26,7 @@ public class Scheduler {
 
     private final ModelMapper modelMapper;
 
-    @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
+    @Scheduled(fixedDelay = 1, timeUnit = TimeUnit.MINUTES)
     public void schedule() {
 
         log.info("Scheduler started at {}", Instant.now());
