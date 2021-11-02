@@ -50,8 +50,8 @@ public class MedicineServiceImpl implements MedicineService {
                 .map(source -> {
                     Medicine target = modelMapper.map(medicineDto, Medicine.class);
                     target.setId(source.getId());
-                    medicineRepository.save(source);
-                    return source;
+                    medicineRepository.save(target);
+                    return target;
                 });
 
     }
