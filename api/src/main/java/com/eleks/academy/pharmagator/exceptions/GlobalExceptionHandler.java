@@ -10,7 +10,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UploadExceptions.class)
-    public ResponseEntity<String> springHandleUploadExceptions(UploadExceptions ex){
+    public ResponseEntity<String> handle(UploadExceptions ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getError().getMessage());
+    }
+
+    @ExceptionHandler(ExportExceptions.class)
+    public ResponseEntity<String> handle(ExportExceptions ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getError().getMessage());
     }
 
