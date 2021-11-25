@@ -18,7 +18,7 @@ pharmagator:
     pharmacy-anc:
       url: https://anc.ua/productbrowser/v2/ua
       category-fetch-url: /categories
-      page-size: 400
+      page-size: 10
       pharmacy-name: pharmacy-anc
     apteka-liki24:
       url: https://liki24.com/vnext/api/catalogue/8000001/products

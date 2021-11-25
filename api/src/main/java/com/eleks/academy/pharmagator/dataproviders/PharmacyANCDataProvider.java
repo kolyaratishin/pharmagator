@@ -11,10 +11,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
@@ -38,8 +36,7 @@ public class PharmacyANCDataProvider implements DataProvider {
     @Override
     public Stream<MedicineDto> loadData() {
         return this.fetchCategories().stream()
-                .map(ANCSubcategoryDto::getSubcategories)
-                .flatMap(Collection::stream)
+                .map(category -> category.getSubcategories().get(0))
                 .map(ANCSubcategoryDto::getLink)
                 .flatMap(this::fetchProductsByCategory);
     }
@@ -51,14 +48,9 @@ public class PharmacyANCDataProvider implements DataProvider {
     }
 
     private Stream<MedicineDto> fetchProductsByCategory(String category) {
-        ANCMedicinesResponse firstANCMedicinesResponse = getMedicineResponseByCategoryAndPage(category, 0L);
-
         return LongStream
-                .range(1, firstANCMedicinesResponse.getTotal() / pageSize +
-                        (firstANCMedicinesResponse.getTotal() % pageSize) != 0 ? 1 : 0)
+                .range(0, 1)
                 .mapToObj(page -> getMedicineResponseByCategoryAndPage(category, page))
-                .collect(Collectors.toCollection(() -> Arrays.asList(firstANCMedicinesResponse)))
-                .stream()
                 .map(ANCMedicinesResponse::getProducts)
                 .flatMap(Collection::stream)
                 .map(this::mapToMedicineDto);
