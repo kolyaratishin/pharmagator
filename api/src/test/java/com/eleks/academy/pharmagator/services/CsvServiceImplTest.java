@@ -51,8 +51,6 @@ class CsvServiceImplTest {
     @Mock
     private ImportServiceImpl importService;
 
-    private MultipartFile file;
-
     private static final String TYPE = "text/csv";
 
     @Mock
@@ -97,27 +95,28 @@ class CsvServiceImplTest {
 
     @Test
     @SneakyThrows
-    void dataImport_isOk() {
-        when(rowProcessor.getBeans()).thenReturn(Arrays.asList(
-                new MedicineDto("Aspirin", BigDecimal.valueOf(25.25), "extID", "ANC"),
-                new MedicineDto("Fervex", BigDecimal.valueOf(25.25), "extID", "Liki24")
-        ));
-        InputStream inputStream = getClass().getResourceAsStream("import.csv");
-        MultipartFile file = new MockMultipartFile("import.csv", "", TYPE, inputStream);
+    void dataImport_isInvalidFormat() {
+        String filepath = "src/test/resources/import/import.csv";
 
-        String expectedMessage = csvService.parseAndSave(file);
+        InputStream inputStream = new FileInputStream(filepath);
+        MultipartFile multipartFile = new MockMultipartFile(filepath, "", "pdf", inputStream);
 
-        assertEquals(expectedMessage, "Save of file " + file.getOriginalFilename() + " was successful");
+        UploadExceptions exception = assertThrows(UploadExceptions.class, () -> csvService.parseAndSave(multipartFile));
+
+        assertEquals(UploadExceptions.Error.INVALID_FILE_FORMAT, exception.getError());
     }
 
     @Test
     @SneakyThrows
-    void dataImport_isInvalidFormat() {
-        InputStream inputStream = getClass().getResourceAsStream("import.csv");
-        MultipartFile file = new MockMultipartFile("import.csv", "", "pdf", inputStream);
+    void dataImport_throwIOException() {
+        MockMultipartFile multipartFile = Mockito.mock(MockMultipartFile.class);
 
-        UploadExceptions exception = assertThrows(UploadExceptions.class, () -> csvService.parseAndSave(file));
-        assertEquals(UploadExceptions.Error.INVALID_FILE_FORMAT, exception.getError());
+        when(multipartFile.getContentType()).thenReturn(TYPE);
+        when(multipartFile.getInputStream()).thenThrow(new IOException());
+
+        UploadExceptions exception = assertThrows(UploadExceptions.class, () -> csvService.parseAndSave(multipartFile));
+
+        assertEquals(UploadExceptions.Error.SAVE_WAS_NOT_SUCCESSFUL, exception.getError());
     }
 
     @Test
@@ -130,7 +129,7 @@ class CsvServiceImplTest {
         pharmacies.forEach(pharmacy ->
                 when(pharmacyRepository.findById(pharmacy.getId())).thenReturn(Optional.of(pharmacy)));
         when(priceRepository.findAllMedicinesPrices()).thenReturn(prices);
-        
+
         byte[] bytes = csvService.export();
 
         FileOutputStream fileOutputStream = new FileOutputStream(file.getAbsolutePath());
