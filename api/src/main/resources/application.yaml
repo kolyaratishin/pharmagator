@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql:pharmagator
+    url: jdbc:postgresql://pharmagator.cluster-cglzuppzap0n.us-east-2.rds.amazonaws.com/pharmagator
     username: postgres
     password: postgres
   jpa:
