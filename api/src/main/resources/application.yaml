@@ -1,3 +1,6 @@
+server:
+  port : 8080
+
 spring:
   datasource:
     url: jdbc:postgresql://pharmagator.cluster-cglzuppzap0n.us-east-2.rds.amazonaws.com/pharmagator
