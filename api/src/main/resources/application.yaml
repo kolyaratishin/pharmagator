@@ -30,7 +30,7 @@ pharmagator:
       category-path: /cat-prods-by-page
       pharmacy-name: pharmacy-ds
       page-limit: 1
-      products-per-page-limit: 50
+      products-per-page-limit: 10
     pharmacy-anc:
       url: https://anc.ua/productbrowser/v2/ua
       category-fetch-url: /categories

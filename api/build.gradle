@@ -64,6 +64,7 @@ dependencies {
     testImplementation 'com.squareup.okhttp3:okhttp:4.9.2'
     testImplementation 'com.squareup.okhttp3:mockwebserver:4.9.2'
     testImplementation 'org.mockito:mockito-inline:4.1.0'
+    testImplementation group: 'io.github.hakky54', name: 'logcaptor', version: '2.7.2'
 }
 
 test {
