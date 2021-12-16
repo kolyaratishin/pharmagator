@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -26,7 +27,7 @@ public class ExportService {
     public XSSFWorkbook getExportData() {
         Map<String, Map<Long, BigDecimal>> prices;
 
-        prices = getMapPricesFromDatabase();
+        prices = getMapPricesFromDatabase(null);
 
         XSSFWorkbook workbook = new XSSFWorkbook();
 
@@ -55,11 +56,22 @@ public class ExportService {
         return workbook;
     }
 
-    public Map<String, Map<Long, BigDecimal>> getMapPricesFromDatabase() {
-        return priceRepository.findAllMedicinesPrices()
+    public Map<String, Map<Long, BigDecimal>> getMapPricesFromDatabase(Pageable pageable) {
+        return priceRepository.findAllMedicinesPrices(pageable)
                 .stream()
                 .collect(Collectors.groupingBy(MedicinePrice::getTitle,
                         Collectors.toMap(MedicinePrice::getPharmacyId, MedicinePrice::getPrice)));
+    }
+
+    public Map<String, Map<Long, BigDecimal>> searchMedicinesPrices(String keyword) {
+         return priceRepository.searchMedicinesPrices(keyword)
+                .stream()
+                .collect(Collectors.groupingBy(MedicinePrice::getTitle,
+                        Collectors.toMap(MedicinePrice::getPharmacyId, MedicinePrice::getPrice)));
+    }
+
+    public Long getRowsCountOfPrices() {
+        return priceRepository.count();
     }
 
     private void buildMedicineRow(XSSFSheet sheet, XSSFCellStyle firstColumnStyle, AtomicInteger rowIndex, HashMap<Long, Integer> pharmacyColumnMapping, String medicineTitle, Map<Long, BigDecimal> phs) {

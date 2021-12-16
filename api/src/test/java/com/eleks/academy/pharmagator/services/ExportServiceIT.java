@@ -76,7 +76,7 @@ class ExportServiceIT {
             DatabaseOperation.REFRESH.execute(this.dataSourceConnection, readDataset());
             Map<String, Map<Long, BigDecimal>> prices;
 
-            prices = mockService.getMapPricesFromDatabase();
+            prices = mockService.getMapPricesFromDatabase(null);
 
             assertEquals(prices.get(med01.getTitle()).get(pharm01.getId()), price01.getPrice());
             assertEquals(prices.get(med02.getTitle()).get(pharm02.getId()), price02.getPrice());

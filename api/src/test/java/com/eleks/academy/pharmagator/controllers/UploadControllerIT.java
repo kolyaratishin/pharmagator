@@ -19,9 +19,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import java.io.InputStream;
+
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -37,7 +42,7 @@ class UploadControllerIT {
     @Mock
     private CsvService csvService;
 
-    private final String URI = "/upload/medicines";
+    private final String URI = "/ui/upload";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -55,13 +60,23 @@ class UploadControllerIT {
     }
 
     @Test
+    void getImportPage_isOk() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(URI))
+                .andExpect(status().isOk())
+                .andExpect(view().name("importData"))
+                .andDo(print());
+    }
+
+    @Test
     void importCsv_isOk() throws Exception {
         InputStream inputStream = getClass().getResourceAsStream("import.csv");
         MockMultipartFile file = new MockMultipartFile("file",
                 "import.csv", "text/csv", inputStream);
 
-        this.mockMvc.perform(MockMvcRequestBuilders.multipart(URI).file(file))
-                .andExpect(MockMvcResultMatchers.status().isNoContent());
+        this.mockMvc.perform(MockMvcRequestBuilders.multipart(URI+"/medicines").file(file))
+                .andExpect(status().isOk())
+                .andExpect(view().name("importResult"))
+                .andDo(print());
     }
 
     @Test
@@ -71,7 +86,7 @@ class UploadControllerIT {
 
         when(csvService.parseAndSave(file)).thenThrow(new UploadExceptions(UploadExceptions.Error.INVALID_FILE_FORMAT));
 
-        this.mockMvc.perform(MockMvcRequestBuilders.multipart(URI).file(file))
+        this.mockMvc.perform(MockMvcRequestBuilders.multipart(URI+"/medicines").file(file))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
 
         then(this.csvService).should().parseAndSave(file);
@@ -84,7 +99,7 @@ class UploadControllerIT {
 
         when(csvService.parseAndSave(file)).thenThrow(new UploadExceptions(UploadExceptions.Error.SAVE_WAS_NOT_SUCCESSFUL));
 
-        this.mockMvc.perform(MockMvcRequestBuilders.multipart(URI).file(file))
+        this.mockMvc.perform(MockMvcRequestBuilders.multipart(URI+"/medicines").file(file))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
 
         then(this.csvService).should().parseAndSave(file);

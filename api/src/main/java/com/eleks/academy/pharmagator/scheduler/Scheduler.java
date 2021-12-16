@@ -25,7 +25,7 @@ public class Scheduler {
 
     private final AdvancedSearchService advancedSearchService;
 
-    @Scheduled(fixedDelay = 100, timeUnit = TimeUnit.MINUTES)
+    @Scheduled(fixedDelay = 14, timeUnit = TimeUnit.HOURS)
     public void schedule() {
         log.info("Scheduler started at {}", Instant.now());
         dataProviderList.parallelStream()

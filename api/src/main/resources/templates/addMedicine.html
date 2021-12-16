@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" class="h-100" xmlns:form="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" class="h-100">
 <head>
     <meta charset="UTF-8"/>
     <title>Pharmagator</title>
@@ -20,7 +20,7 @@
         <form action="#" th:action="@{/ui/input}" th:object="${medicineDto}" method="post" >
             <p>Title <input type="text" th:field="*{title}" required placeholder="Enter medicine title"
                             pattern ="^[1-9a-zA-ZА-Яа-яЁёЇїІіЄєҐґ'-]+"
-                            oninvalid="setCustomValidity('Enter title here, it shouldn't contain any special characters')"
+                            oninvalid="setCustomValidity('Enter title here, it shouldn\'t contain any special characters')"
                             oninput="this.setCustomValidity('')"/></p>
             <p>Price <input type="text"  th:field="*{price}" required placeholder="Enter medicine price"
                             pattern="(([1-9]\d*)(\.\d+)?)|(0\.\d+)"
@@ -32,13 +32,15 @@
                                   oninput="this.setCustomValidity('')"/></p>
             <p>Pharmacy name <input type="text"  th:field="*{pharmacyName}" required placeholder="Enter pharmacy name"
                                     pattern ="^[1-9a-zA-ZА-Яа-яЁёЇїІіЄєҐґ'-]+"
-                                    oninvalid="this.setCustomValidity('Enter pharmacy name here, it shouldn't contain any special characters')"
+                                    oninvalid="this.setCustomValidity('Enter pharmacy name here, it shouldn7\'t contain any special characters')"
                                     oninput="this.setCustomValidity('')"/></p>
             <p><input type="submit" value="Add medicine" /> <input type="reset" value="Reset" /></p>
         </form>
 
     </div>
 </main>
+
+<div th:replace="~{fragments/footer :: footer}"> </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
         integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="

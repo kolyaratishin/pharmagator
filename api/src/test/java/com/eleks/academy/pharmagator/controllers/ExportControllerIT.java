@@ -24,6 +24,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -42,8 +45,9 @@ class ExportControllerIT {
     @Mock
     private CsvServiceImpl csvService;
 
-    private final String PDF_URI = "/export/pdf";
-    private final String CSV_URI = "/export/csv";
+    private final String BASE_URI = "/ui/export";
+    private final String PDF_URI = "/ui/export/pdf";
+    private final String CSV_URI = "/ui/export/csv";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -58,6 +62,14 @@ class ExportControllerIT {
     @AfterEach
     void tearDown() {
         JdbcTestUtils.deleteFromTables(jdbcTemplate, "prices", "pharmacies", "medicines");
+    }
+
+    @Test
+    void getExportPage_ok() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URI))
+                .andExpect(status().isOk())
+                .andExpect(view().name("exportData"))
+                .andDo(print());
     }
 
     @Test

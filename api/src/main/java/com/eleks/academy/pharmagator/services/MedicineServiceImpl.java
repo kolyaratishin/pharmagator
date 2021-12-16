@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,11 @@ public class MedicineServiceImpl implements MedicineService {
     @Override
     public List<Medicine> findAll() {
         return medicineRepository.findAll();
+    }
+
+    @Override
+    public Page<Medicine> findAllPaginated(Pageable pageable) {
+        return medicineRepository.findAll(pageable);
     }
 
     @Override

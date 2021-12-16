@@ -128,7 +128,7 @@ class CsvServiceImplTest {
         when(pharmacyRepository.findAll()).thenReturn(pharmacies);
         pharmacies.forEach(pharmacy ->
                 when(pharmacyRepository.findById(pharmacy.getId())).thenReturn(Optional.of(pharmacy)));
-        when(priceRepository.findAllMedicinesPrices()).thenReturn(prices);
+        when(priceRepository.findAllMedicinesPrices(null)).thenReturn(prices);
 
         byte[] bytes = csvService.export();
 

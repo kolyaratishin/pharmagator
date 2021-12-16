@@ -13,8 +13,12 @@ spring:
       hibernate:
         hbm2dll:
           extra_physical_table_types: MATERIALIZED VIEW
+  thymeleaf:
+    cache: false
 
 pharmagator:
+  ui:
+    items-per-page: 10
   data-providers:
     pharmacy-slavutych:
       pharmacy-name: pharmacy-slavutych

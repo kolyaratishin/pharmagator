@@ -12,6 +12,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Arrays;
@@ -79,6 +82,16 @@ class MedicineServiceImplTest {
 
         assertEquals(medicine1.getId(), medicine2.getId());
         assertEquals(medicine1.getTitle(), medicine2.getTitle());
+    }
+
+    @Test
+    void findAllPaginated_ok() {
+        Pageable pageable = Pageable.ofSize(2);
+        when(repository.findAll(pageable)).thenReturn(new PageImpl<>(medicines));
+
+        Page<Medicine> medicinePage = medicineService.findAllPaginated(pageable);
+
+        assertEquals(2, medicinePage.getTotalElements());
     }
 
     @Test

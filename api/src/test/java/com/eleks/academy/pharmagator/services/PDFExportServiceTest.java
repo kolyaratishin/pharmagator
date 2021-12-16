@@ -13,6 +13,7 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,6 +58,7 @@ class PDFExportServiceTest {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @SneakyThrows
     @BeforeEach
     void setUp() {
         pharmacies = Arrays.asList(
@@ -87,7 +89,9 @@ class PDFExportServiceTest {
         File file = new File(filepath);
 
         when(pharmacyRepository.findAll()).thenReturn(pharmacies);
-        when(priceRepository.findAllMedicinesPrices()).thenReturn(prices);
+        when(priceRepository.findAllMedicinesPrices(null)).thenReturn(prices);
+
+        FieldUtils.writeField(pdfExportService, "pathToFont", "src/main/resources/fonts/FreeSerif.ttf", true);
 
         byte[] bytes = pdfExportService.export();
         FileOutputStream fileInputStream = new FileOutputStream(file.getAbsolutePath());
@@ -121,7 +125,7 @@ class PDFExportServiceTest {
     @Test
     void createBaseFont_throwsDocumentException() {
         when(pharmacyRepository.findAll()).thenReturn(pharmacies);
-        when(priceRepository.findAllMedicinesPrices()).thenReturn(prices);
+        when(priceRepository.findAllMedicinesPrices(null)).thenReturn(prices);
 
         try (MockedStatic<BaseFont> baseFont = Mockito.mockStatic(BaseFont.class)) {
             baseFont.when(() -> BaseFont.createFont(anyString(), anyString(), anyBoolean()))
@@ -136,7 +140,7 @@ class PDFExportServiceTest {
     @Test
     void createBaseFont_throwsIOException() {
         when(pharmacyRepository.findAll()).thenReturn(pharmacies);
-        when(priceRepository.findAllMedicinesPrices()).thenReturn(prices);
+        when(priceRepository.findAllMedicinesPrices(null)).thenReturn(prices);
 
         try (MockedStatic<BaseFont> baseFont = Mockito.mockStatic(BaseFont.class)) {
             baseFont.when(() -> BaseFont.createFont(anyString(), anyString(), anyBoolean()))
